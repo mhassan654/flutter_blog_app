@@ -15,7 +15,7 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  void loadUserInfo() async{
+  void _loadUserInfo() async{
     String token = await getToken();
     if(token == ''){
       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Login()), (route)=>false);
@@ -35,6 +35,12 @@ class _LoadingState extends State<Loading> {
       ));
       }
   }
+  }
+
+  @override
+  void initState() {
+    _loadUserInfo();
+    super.initState();
   }
   @override
   Widget build(BuildContext context) {
