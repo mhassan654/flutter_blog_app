@@ -14,9 +14,11 @@ Future<ApiResponse> login (String email, String password) async{
     headers: {'Accept': 'application/json'},
     body:{'email':email, 'password': password}
     );
+    // print(response.body);
 
     if(response.statusCode == 200){
       apiResponse.data = User.fromJson(jsonDecode(response.body));
+      // print(apiResponse.data);
     }
     if(response.statusCode == 422){
       final errors = jsonDecode(response.body)['errors'];
@@ -26,9 +28,13 @@ Future<ApiResponse> login (String email, String password) async{
       apiResponse.error = jsonDecode(response.body)['message'];
     }
     else{
-      apiResponse.error = somethingWentWrong;
+      print(apiResponse.error);
+      // apiResponse.error = somethingWentWrong;
     }
-  }catch(e){ apiResponse.error = serverError;}
+  }catch(e){
+    apiResponse.error = serverError;
+    // print(e);
+  }
 
   return apiResponse;
 }

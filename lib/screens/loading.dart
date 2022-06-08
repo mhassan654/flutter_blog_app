@@ -4,7 +4,7 @@ import 'package:flutter_blog_app/models/api_response.dart';
 import 'package:flutter_blog_app/services/user_service.dart';
 
 import '../constants.dart';
-import 'Home.dart';
+import 'home.dart';
 import 'login.dart';
 
 class Loading extends StatefulWidget {
