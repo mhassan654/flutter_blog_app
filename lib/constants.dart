@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const baseURL = "https://ad8d-102-222-235-178.ngrok.io/api/";
+const baseURL = "https://da7e-102-222-235-246.ngrok.io/api/";
 const loginURL = baseURL + 'login';
 const registerURL = baseURL + 'register';
 const logoutURL = baseURL + 'logout';
@@ -43,7 +43,7 @@ Row kLoginRegisterHint(String text, String label, Function onTap){
       GestureDetector(
         child: Text(
             label, style: const TextStyle(color: Colors.blue)),
-        onTap: (){},
+        onTap: ()=>onTap(),
       )
     ],
   );
