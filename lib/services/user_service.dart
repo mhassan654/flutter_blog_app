@@ -53,6 +53,7 @@ Future<ApiResponse> register (String name, String email, String password) async{
           'password_confirmation': password
         }
     );
+    print(response.body);
 
     if(response.statusCode == 200){
       apiResponse.data = User.fromJson(jsonDecode(response.body));
@@ -65,7 +66,7 @@ Future<ApiResponse> register (String name, String email, String password) async{
       apiResponse.error = jsonDecode(response.body)['message'];
     }
     else{
-      apiResponse.error = somethingWentWrong;
+      apiResponse.error = jsonDecode(response.body)['message'];;
     }
   }catch(e){ apiResponse.error = serverError;}
 
