@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const baseURL = "https://da7e-102-222-235-246.ngrok.io/api/";
+const baseURL = "https://a33d-102-222-235-246.ngrok.io/api/";
 const loginURL = baseURL + 'login';
 const registerURL = baseURL + 'register';
 const logoutURL = baseURL + 'logout';
@@ -18,7 +18,8 @@ InputDecoration kInputDecoration(String label){
   return InputDecoration(
       labelText: label,
       contentPadding: const EdgeInsets.all(10),
-      border: const OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.grey))
+      border: const OutlineInputBorder(borderSide: BorderSide(
+          width: 1, color: Colors.grey))
   );
 }
 
@@ -28,9 +29,10 @@ TextButton kTextButton(String label, Function onPressed){
     child: Text(label, style: const TextStyle(color: Colors.white),),
     style: ButtonStyle(
         backgroundColor: MaterialStateColor.resolveWith((states) => Colors.blue),
-        padding: MaterialStateProperty.resolveWith((states) => const EdgeInsets.symmetric(vertical: 10))
+        padding: MaterialStateProperty.resolveWith((states) =>
+        const EdgeInsets.symmetric(vertical: 10))
     ),
-    onPressed: ()=>onPressed(),
+    onPressed: ()=> onPressed(),
   );
 }
 

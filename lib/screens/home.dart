@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_blog_app/screens/post_form.dart';
 import 'package:flutter_blog_app/screens/posts_screen.dart';
 import 'package:flutter_blog_app/screens/profile_screen.dart';
 import 'package:flutter_blog_app/services/user_service.dart';
@@ -34,7 +35,11 @@ class _HomeState extends State<Home> {
       ),
       body: currentIndex == 0 ? PostScreen() : ProfileScreen(),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
+        onPressed: (){
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+              builder: (context)=> PostForm()), (route) => false);
+
+        },
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

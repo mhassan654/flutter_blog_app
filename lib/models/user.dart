@@ -20,7 +20,7 @@ factory User.fromJson(Map<String, dynamic> json){
     name: json['user']['name'],
     image: json['user']['name'],
     email: json['user']['email'],
-    token: json['user']['token'],
+    token: json['token'],
   );
 }
 }

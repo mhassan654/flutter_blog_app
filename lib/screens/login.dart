@@ -44,7 +44,6 @@ class _LoginState extends State<Login> {
               textAlign: TextAlign.center,
               style: const TextStyle(
                 color: Colors.white,
-
               ),
             )
         ),
@@ -52,9 +51,10 @@ class _LoginState extends State<Login> {
     }
   }
   void _saveAndRedirectToHome(User user) async{
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    await pref.setString('token', user.token ?? '');
-    await pref.setInt('userId', user.id ?? 0);
+    final prefs = await SharedPreferences.getInstance();
+
+    prefs.setString('token', user.token ?? '');
+    prefs.setInt('userId', user.id ?? 0);
     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
         builder: (context)=>const Home()), (route) => false);
   }

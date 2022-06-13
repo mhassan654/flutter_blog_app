@@ -16,18 +16,25 @@ class Loading extends StatefulWidget {
 
 class _LoadingState extends State<Loading> {
   void _loadUserInfo() async{
+
     String token = await getToken();
+    print(token);
+
     if(token == ''){
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Login()), (route)=>false);
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context)=>const Login()), (route)=>false);
     }
     else{
       ApiResponse response = await getUserDetails();
+      print(response.error);
       if(response.error == null){
-        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Home()), (route)=>false);
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context)=>const Home()), (route)=>false);
       }
     else if(response.error == unauthorized)
       {
-        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Login()), (route)=>false);
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context)=>const Login()), (route)=>false);
       }
     else{
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(

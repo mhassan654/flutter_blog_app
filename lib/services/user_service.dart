@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter_blog_app/constants.dart';
 import 'package:flutter_blog_app/models/api_response.dart';
 import 'package:flutter_blog_app/models/user.dart';
@@ -14,11 +15,9 @@ Future<ApiResponse> login (String email, String password) async{
     headers: {'Accept': 'application/json'},
     body:{'email':email, 'password': password}
     );
-    // print(response.body);
 
     if(response.statusCode == 200){
       apiResponse.data = User.fromJson(jsonDecode(response.body));
-      // print(apiResponse.data);
     }
     if(response.statusCode == 422){
       final errors = jsonDecode(response.body)['errors'];
@@ -28,12 +27,11 @@ Future<ApiResponse> login (String email, String password) async{
       apiResponse.error = jsonDecode(response.body)['message'];
     }
     else{
-      print(apiResponse.error);
       // apiResponse.error = somethingWentWrong;
+      apiResponse.error = apiResponse.error;
     }
   }catch(e){
     apiResponse.error = serverError;
-    // print(e);
   }
 
   return apiResponse;
@@ -53,7 +51,7 @@ Future<ApiResponse> register (String name, String email, String password) async{
           'password_confirmation': password
         }
     );
-    print(response.body);
+    // print(response.body);
 
     if(response.statusCode == 200){
       apiResponse.data = User.fromJson(jsonDecode(response.body));
@@ -66,9 +64,12 @@ Future<ApiResponse> register (String name, String email, String password) async{
       apiResponse.error = jsonDecode(response.body)['message'];
     }
     else{
-      apiResponse.error = jsonDecode(response.body)['message'];;
+      apiResponse.error = jsonDecode(response.body)['message'];
     }
-  }catch(e){ apiResponse.error = serverError;}
+  }catch(e){
+    print(apiResponse.error );
+    // apiResponse.error = serverError;
+  }
 
   return apiResponse;
 }
@@ -93,9 +94,13 @@ Future<ApiResponse> getUserDetails () async{
       apiResponse.error = unauthorized;
     }
     else{
-      apiResponse.error = somethingWentWrong;
+      // print(apiResponse.error );
+      // apiResponse.error = somethingWentWrong;
     }
-  }catch(e){ apiResponse.error = serverError;}
+  }catch(e){
+    print(e);
+    // apiResponse.error = serverError;
+  }
 
   return apiResponse;
 }
@@ -116,4 +121,9 @@ Future<int> getUserId() async{
 Future<bool> logout() async{
   SharedPreferences pref = await SharedPreferences.getInstance();
   return await pref.remove('token');
+}
+
+String? getStringImage(File? file){
+  if(file == null) return null;
+  return base64Encode(file.readAsBytesSync());
 }
