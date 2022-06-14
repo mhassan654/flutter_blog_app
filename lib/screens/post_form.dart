@@ -27,7 +27,7 @@ class _PostFormState extends State<PostForm> {
   final _picker = ImagePicker();
 
   Future getImage() async{
-    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if(pickedFile != null){
       setState(() {
         _imageFile = File(pickedFile.path);
