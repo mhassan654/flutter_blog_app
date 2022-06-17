@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const baseURL = "https://1686-102-222-235-246.ngrok.io/api/";
+const baseURL = "https://3d54-102-222-235-155.ngrok.io/api/";
 const loginURL = baseURL + 'login';
 const registerURL = baseURL + 'register';
 const logoutURL = baseURL + 'logout';
@@ -48,5 +48,29 @@ Row kLoginRegisterHint(String text, String label, Function onTap){
         onTap: ()=>onTap(),
       )
     ],
+  );
+
+}
+
+Expanded kLikeAndComment(int value, IconData icon, Color color, Function onTap)
+{
+  return Expanded(
+    child: Material(
+      child: InkWell(
+        onTap: ()=>onTap(),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 16, color: color),
+              SizedBox(width:4),
+              Text('$value')
+            ],
+          ),
+        ),
+
+      ),
+    )
   );
 }

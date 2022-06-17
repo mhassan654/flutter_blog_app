@@ -30,6 +30,7 @@ class _PostScreenState extends State<PostScreen> {
         _postArray = response.data as List<dynamic>;
         _loading = _loading ? !_loading : _loading;
       });
+
     }else if(response.error == unauthorized){
       logout().then((value)=>{
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
@@ -141,32 +142,36 @@ class _PostScreenState extends State<PostScreen> {
                     )
                   ),
                 ): SizedBox(height: post.image != null ? 0 : 10,),
+
                 Row(
                   children: <Widget>[
-                    Expanded(
-                        child: Material(
-                      child: InkWell(
-                        onTap: (){
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Icon(Icons.favorite, size: 16,),
-                                SizedBox(width: 4,)
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    ),
+                    kLikeAndComment(
+                        post.likesCount ?? 0,
+                        post.selfLiked == true ? Icons.favorite : Icons.favorite_outline,
+                        post.selfLiked == true ? Colors.red : Colors.black54,
+                        (){
+
+                        }),
+
                     Container(
                       height: 25,
                         width: 0.5,
                       color: Colors.black38,
-                    )
+                    ),
+                    kLikeAndComment(
+                        post.commentsCount ?? 0,
+                        Icons.sms_outlined,
+                        Colors.black54,
+                            (){
+
+                            },
+                    ),
                   ],
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 0.5,
+                  color: Colors.black26,
                 )
               ],
             ),
