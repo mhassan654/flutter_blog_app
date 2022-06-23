@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_blog_app/constants.dart';
 import 'package:flutter_blog_app/models/api_response.dart';
+import 'package:flutter_blog_app/models/post.dart';
 import 'package:flutter_blog_app/services/post_service.dart';
 import 'package:flutter_blog_app/services/user_service.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,8 +12,13 @@ import 'home.dart';
 import 'login.dart';
 
 class PostForm extends StatefulWidget {
-  const PostForm({Key? key}) : super(key: key);
-
+  final Post? post;
+  final String? title;
+  // const PostForm({Key? key}) : super(key: key);
+PostForm({
+    this.post,
+  this.title
+});
   @override
   State<PostForm> createState() => _PostFormState();
 }
@@ -71,7 +77,7 @@ class _PostFormState extends State<PostForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add New Blog Post'),
+        title: Text('${widget.title}'),
         centerTitle: true,
       ),
       body: ListView(

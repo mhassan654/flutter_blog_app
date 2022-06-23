@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const baseURL = "https://3d54-102-222-235-155.ngrok.io/api/";
+const baseURL = "http://10.0.2.2:8000/api/";
 const loginURL = baseURL + 'login';
 const registerURL = baseURL + 'register';
 const logoutURL = baseURL + 'logout';

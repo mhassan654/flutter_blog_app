@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blog_app/models/api_response.dart';
 import 'package:flutter_blog_app/models/post.dart';
+import 'package:flutter_blog_app/screens/post_form.dart';
 import 'package:flutter_blog_app/services/post_service.dart';
 import 'package:flutter_blog_app/services/user_service.dart';
 
@@ -47,8 +48,65 @@ class _PostScreenState extends State<PostScreen> {
             ),
           ));
     }
-
   }
+
+  void _handlePostLikeDislike(int postId) async{
+    ApiResponse response = await likeUnlikePost(postId);
+
+    if(response.error == null){
+      retrievePosts();
+    }else if(response.error == unauthorized){
+      logout().then((value)=>{
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+            builder: (context)=> const Login()), (route) => false)
+      });
+
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.red,
+            content: Text(
+              '${response.error}',
+              textAlign: TextAlign.center,
+            ),
+          ));
+    }
+  }
+
+  void __handleDeletePost(int postId) async{
+    ApiResponse response = await deletePost(postId);
+
+    if(response.error == null){
+      // print()
+      retrievePosts();
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.green,
+            content: Text(
+              'Deleted',
+              textAlign: TextAlign.center,
+            ),
+          ));
+    }else if(response.error == unauthorized){
+      logout().then((value)=>{
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+            builder: (context)=> const Login()), (route) => false)
+      });
+
+    }else{
+      // print(response.);
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.red,
+            content: Text(
+              '${response.error}',
+              textAlign: TextAlign.center,
+            ),
+          ));
+    }
+  }
+
+  Future<void> likeUnlike()async{}
 
   @override
   void initState() {
@@ -121,9 +179,11 @@ class _PostScreenState extends State<PostScreen> {
                         ],
                       onSelected: (val){
                         if(val == 'edit'){
-                          //edit
+                         Navigator.of(context).push(MaterialPageRoute(
+                             builder: (context)=>PostForm(
+                               title: 'Edit Post',post: post)));
                       }else{
-                          //delete
+                          __handleDeletePost(post.id ?? 0);
                         }
                       },
                     ) : const SizedBox(),
@@ -136,6 +196,7 @@ class _PostScreenState extends State<PostScreen> {
                   height: 180,
                   margin: const EdgeInsets.only(top: 5),
                   decoration: BoxDecoration(
+                    // borderRadius: BorderRadius.,
                     image: DecorationImage(
                       image: NetworkImage('${post.image}'),
                       fit: BoxFit.cover
@@ -150,7 +211,7 @@ class _PostScreenState extends State<PostScreen> {
                         post.selfLiked == true ? Icons.favorite : Icons.favorite_outline,
                         post.selfLiked == true ? Colors.red : Colors.black54,
                         (){
-
+                          _handlePostLikeDislike(post.id ?? 0);
                         }),
 
                     Container(

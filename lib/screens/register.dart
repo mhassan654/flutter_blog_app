@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_blog_app/models/api_response.dart';
 import 'package:flutter_blog_app/models/user.dart';
 import 'package:flutter_blog_app/services/user_service.dart';
@@ -68,38 +69,43 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Register'),
-          centerTitle: true,
-        ),
+        // appBar: AppBar(
+        //   title: const Text('Register'),
+        //   centerTitle: true,
+        // ),
         body: Column(
           children: [
             Container(
               height: 150,
+              width: MediaQuery.of(context).size.width,
               decoration:const BoxDecoration(
                 color: Colors.lightBlueAccent,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.elliptical(80, 50),
-                // bottomRight: Radius.circular()
-                // border: Border(
-                //     left: BorderSide(width: 3)
-                ),
+                // borderRadius: BorderRadius.only(
+                //   bottomLeft: Radius.elliptical(80, 50),
+                // // bottomRight: Radius.circular()
+                // // border: Border(
+                // //     left: BorderSide(width: 3)
+                // ),
                 // borderRadius:
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                    'Register',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 55,
+                    fontWeight: FontWeight.w600
+                  ),
+                ),
               ),
             ),
            // const SizedBox(height: 10,),
-            Container(
-              decoration:const BoxDecoration(
-                // color: Colors.lightBlueAccent,
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.elliptical(80, 50),
-                    // bottomRight: Radius.elliptical(15, -10)
-                  // border: Border(
-                  //     left: BorderSide(width: 3)
+            Expanded(
+              child: Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(10))
                 ),
-                // borderRadius:
-              ),
-              child: Expanded(
                 child: Form(
                   key: formkey,
                   child: ListView(

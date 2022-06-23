@@ -81,3 +81,65 @@ Future<ApiResponse> createPost (
 
   return apiResponse;
 }
+
+Future<ApiResponse> likeUnlikePost ( int postId ) async{
+  ApiResponse apiResponse = ApiResponse();
+
+  try{
+    String token = await getToken();
+    final response = await http.post(Uri.parse('$postsURL/$postId/likes'),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token'
+        }
+    );
+
+    // print(response.body);
+
+    if(response.statusCode == 200){
+      apiResponse.data = jsonDecode(response.body)['msg'];
+    }
+    if(response.statusCode == 401){
+      apiResponse.error = unauthorized;
+    }
+    else{
+      apiResponse.error = jsonDecode(response.body)['message'];
+    }
+  }catch(e){
+    // print(apiResponse.error);
+    apiResponse.error = serverError;
+  }
+
+  return apiResponse;
+}
+
+Future<ApiResponse> deletePost ( int postId ) async{
+  ApiResponse apiResponse = ApiResponse();
+
+  try{
+    String token = await getToken();
+    final response = await http.delete(Uri.parse('$postsURL/$postId'),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token'
+        }
+    );
+
+    // print('$postsURL/$postId');
+
+    if(response.statusCode == 200){
+      apiResponse.data = jsonDecode(response.body)['message'];
+    }
+    else if(response.statusCode == 401){
+      apiResponse.error = unauthorized;
+    }
+    // else{
+    //   apiResponse.error = jsonDecode(response.body)['message'];
+    // }
+  }catch(e){
+    print(apiResponse.error);
+    // apiResponse.error = serverError;
+  }
+
+  return apiResponse;
+}
